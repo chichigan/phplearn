@@ -9,18 +9,28 @@
 	//Close connection
 	mysqli_close($conn);
 	
-	
-	
-	foreach ($pizzas as $pizza){
-		echo 'Title: '.$pizza['title'].'<br>';
-		echo 'Ingredients: <br>';
-		foreach (explode(',',$pizza['ingredients']) as $ing){
-			echo htmlspecialchars($ing).'<br>';
-		}
-		
-		echo '<br>';
-		
-	}
-	
-
 ?>
+
+<html>
+	<?php foreach ($pizzas as $pizza){ ?>
+		<div style="border:1px solid black;width:20%;">
+			<b>Title</b>: <?php echo htmlspecialchars($pizza['title']); ?>
+			<br>
+			<b>Ingredients</b>: 
+				<ul>
+				<?php 
+					foreach (explode(',',$pizza['ingredients']) as $ing){
+						echo '<li>'.htmlspecialchars($ing).'</li>';
+					}
+				?>
+				</ul>
+			<a href="details.php?id=<?php echo $pizza['id'] ?>"><b>More info</b></a>
+		</div>
+		<br>
+	<?php }?>
+</html>
+
+
+
+
+

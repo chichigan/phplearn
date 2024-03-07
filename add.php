@@ -1,6 +1,6 @@
 <?php
 	include('config/db_connect.php');
-	include('header.php');
+	
 
 	$errors = array('email'=>'','title'=>'','ingredients'=>'');
 	$email='';
@@ -41,37 +41,44 @@
 				$errors['ingredients'] = 'Ingredients must be comma seperated list';
 			}
 		}
+		
+		//If no errors in array
 		if(!array_filter($errors)){
-			$email = mysqli_real_escape_string($con,$_POST['email']);
-			$title = mysqli_real_escape_string($con,$_POST['title']);
-			$ingredients = mysqli_real_escape_string($con,$_POST['ingredients']);
+			$email = mysqli_real_escape_string($conn,$_POST['email']);
+			$title = mysqli_real_escape_string($conn,$_POST['title']);
+			$ingredients = mysqli_real_escape_string($conn,$_POST['ingredients']);
 			
 			$sql= "INSERT INTO pizzas(title,email,ingredients) VALUES ('$title','$email','$ingredients')";
 			
-			if(mysqli_query($con,$sql)){
+			if(mysqli_query($conn,$sql)){
 				header('Location: index.php');
 			}else{
 				echo 'Query error: '.mysqli_error($conn);
 			}
 		}
     }	//END OF POST CHECK
+	
+	mysqli_close($conn);
 
  ?>
 
+<html>
+	<?php include('header.php'); ?>
 
-<h4>Add a pizza</h4>
-<form action='' method='post'>
-    <label>Your email:</label>
-    <input type="text" name="email" value="<?php echo htmlspecialchars($email) ?>"><br>
-	<div style="color:red"><?php echo $errors['email'] ?></div>
-    
-	<label>Pizza Title:</label>
-    <input type="text" name="title" value="<?php echo htmlspecialchars($title) ?>"><br>
-	<div style="color:red"><?php echo $errors['title'] ?></div>
+	<h4>Add a pizza</h4>
+	<form action='' method='post'>
+		<label>Your email:</label>
+		<input type="text" name="email" value="<?php echo htmlspecialchars($email) ?>"><br>
+		<div style="color:red"><?php echo $errors['email'] ?></div>
+		
+		<label>Pizza Title:</label>
+		<input type="text" name="title" value="<?php echo htmlspecialchars($title) ?>"><br>
+		<div style="color:red"><?php echo $errors['title'] ?></div>
 
-    <label>Ingredients:</label>
-    <input type="text" name="ingredients" value="<?php echo htmlspecialchars($ingredients) ?>"><br>
-	<div style="color:red"><?php echo $errors['ingredients'] ?></div>
+		<label>Ingredients:</label>
+		<input type="text" name="ingredients" value="<?php echo htmlspecialchars($ingredients) ?>"><br>
+		<div style="color:red"><?php echo $errors['ingredients'] ?></div>
 
-    <input type="submit" name="submit" value="submit">
-</form>
+		<input type="submit" name="submit" value="submit">
+	</form>
+</html>
