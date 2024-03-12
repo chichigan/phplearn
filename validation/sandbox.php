@@ -1,5 +1,7 @@
 <?php 
-	echo 'This is a file from sandbox/sandox.php';
+	if(isset($_POST['submit'])){
+		
+	}
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +15,7 @@
 	
 	<div class="new-user">
 		<h2>Create new user</h2>
-		<form action="" method="POST">
+		<form action="sandbox.php" method="POST">
 			<label>Username:</label>
 			<input type="text" name="username">
 
